@@ -1,3 +1,10 @@
+## 1.0.0 (2026-10-27)
+
+### Features
+
+* release Joutio leaderboard 1.0.0 ([897b121](https://github.com/joutio/joutio-leaderboard/commit/897b12113615035cbb27921ff7d352f9ba22eeb1))
+* release Joutio leaderboard 1.0.0 ([332fb4f](https://github.com/joutio/joutio-leaderboard/commit/332fb4fcfb5f0641b35064a7de987e53545b2881))
+
 ## [5.0.0](https://github.com/joutio/joutio-leaderboard/compare/v4.4.2...v5.0.0) (2026-10-23)
 
 ### ⚠ BREAKING CHANGES

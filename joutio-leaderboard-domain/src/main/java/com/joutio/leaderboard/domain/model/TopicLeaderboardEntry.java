@@ -1,0 +1,51 @@
+package com.joutio.leaderboard.domain.model;
+
+import lombok.Builder;
+
+import java.time.Instant;
+
+/**
+ * Modèle domaine (read model) d'une entrée de classement **par thème**.
+ *
+ * <p>Deux lignes par joueur : l'entrée all-time ({@code month == null}, {@code totalXp} + identité
+ * dénormalisée) et une entrée par mois ({@code month != null}, {@code monthlyXp}) qui conserve
+ * l'historique des mois passés.</p>
+ */
+@Builder(toBuilder = true)
+public record TopicLeaderboardEntry(
+        String entryId,
+        String topicId,
+        String userId,
+        int totalXp,
+        int monthlyXp,
+        String month,
+        Instant updatedAt,
+        String pseudonym,
+        String avatarOptions,
+        String country
+) {
+
+    public static TopicLeaderboardEntry empty(String topicId, String userId) {
+        return TopicLeaderboardEntry.builder()
+                .entryId(LeaderboardRules.entryId(topicId, userId))
+                .topicId(topicId)
+                .userId(userId)
+                .totalXp(0)
+                .monthlyXp(0)
+                .month(null)
+                .updatedAt(Instant.now())
+                .build();
+    }
+
+    public static TopicLeaderboardEntry emptyMonthly(String topicId, String userId, String month) {
+        return TopicLeaderboardEntry.builder()
+                .entryId(LeaderboardRules.monthlyEntryId(topicId, userId, month))
+                .topicId(topicId)
+                .userId(userId)
+                .totalXp(0)
+                .monthlyXp(0)
+                .month(month)
+                .updatedAt(Instant.now())
+                .build();
+    }
+}

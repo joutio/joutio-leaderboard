@@ -1,0 +1,220 @@
+## [5.0.0](https://github.com/joutio/joutio-leaderboard/compare/v4.4.2...v5.0.0) (2026-10-23)
+
+### ⚠ BREAKING CHANGES
+
+* **leaderboard:** supprime le niveau global des classements
+
+### Code Refactoring
+
+* **leaderboard:** supprime le niveau global des classements ([f4f035e](https://github.com/joutio/joutio-leaderboard/commit/f4f035eb3628b84b3683eed10dcc5c962c0bf23d))
+
+## [4.4.2](https://github.com/joutio/joutio-leaderboard/compare/v4.4.1...v4.4.2) (2026-10-22)
+
+### Bug Fixes
+
+* **leaderboard:** aligne le test sur le contrat profile 4.10.0 ([a4fc126](https://github.com/joutio/joutio-leaderboard/commit/a4fc126536c3068348637474141aee6e0483bb3e))
+
+## [4.4.1](https://github.com/joutio/joutio-leaderboard/compare/v4.4.0...v4.4.1) (2026-10-22)
+
+### Bug Fixes
+
+* aligne les contrats inter-services sur les releases disponibles ([ccea015](https://github.com/joutio/joutio-leaderboard/commit/ccea015fad2048533dad37329e1f64eb0c327932))
+
+## [4.4.0](https://github.com/joutio/joutio-leaderboard/compare/v4.3.1...v4.4.0) (2026-10-22)
+
+### Features
+
+* **account:** retire le compte supprimé des classements ([f0f0844](https://github.com/joutio/joutio-leaderboard/commit/f0f08445b907f87dbd905aba52f50f528d420145))
+
+## [4.3.1](https://github.com/joutio/joutio-leaderboard/compare/v4.3.0...v4.3.1) (2026-10-12)
+
+### Bug Fixes
+
+* **leaderboard:** contrats profile 3.4.0 / social 5.2.0 (élagués) ([9fcf920](https://github.com/joutio/joutio-leaderboard/commit/9fcf9205711b9ad033368004bea49971bffa7a3f))
+
+## [4.3.0](https://github.com/joutio/joutio-leaderboard/compare/v4.2.0...v4.3.0) (2026-10-12)
+
+### Features
+
+* **console:** consume joutio-sdk 4.7.0 (lag, commandes en vol, snapshots, scheduled) ([6f043cb](https://github.com/joutio/joutio-leaderboard/commit/6f043cb802488d0694e410130f54d151e6fb68c1))
+
+## [4.2.0](https://github.com/joutio/joutio-leaderboard/compare/v4.1.0...v4.2.0) (2026-10-12)
+
+### Features
+
+* **console:** consume joutio-sdk 4.6.0 (build-info + API interne event store/scheduled) ([17cb81d](https://github.com/joutio/joutio-leaderboard/commit/17cb81d828283e86fae43bfaed867442bc19de60))
+
+## [4.1.0](https://github.com/joutio/joutio-leaderboard/compare/v4.0.0...v4.1.0) (2026-10-12)
+
+### Features
+
+* **console:** consume joutio-sdk 4.5.2 (DLQ Axon par défaut + agent console) ([a2ebd31](https://github.com/joutio/joutio-leaderboard/commit/a2ebd31637828486958b0ebcfe9668a00ec74223))
+
+## [4.0.0](https://github.com/joutio/joutio-leaderboard/compare/v3.0.0...v4.0.0) (2026-10-12)
+
+### ⚠ BREAKING CHANGES
+
+* **leaderboard:** LeaderboardProfilePort retiré du domaine leaderboard.
+
+### Code Refactoring
+
+* **leaderboard:** identité locale (fin du join dans la projection) ([f2356a2](https://github.com/joutio/joutio-leaderboard/commit/f2356a2fc2f756fa6c1543b1bdcfb3a84fbdb9b4))
+
+## [3.0.0](https://github.com/joutio/joutio-leaderboard/compare/v2.1.0...v3.0.0) (2026-09-30)
+
+### ⚠ BREAKING CHANGES
+
+* **leaderboard:** denormalized identity renamed to pseudonym; per-field profile events replace ProfileUpdatedEvent (V2 migration edited, DB reset required); pins SDK 4.1.0, profile 3.0.0, social 3.0.0.
+
+### Code Refactoring
+
+* **leaderboard:** pseudonym and per-field profile events ([7dd5988](https://github.com/joutio/joutio-leaderboard/commit/7dd59884a6a78c7c4a1ea784de62f743413457e6))
+
+## [2.1.0](https://github.com/joutio/joutio-leaderboard/compare/v2.0.0...v2.1.0) (2026-09-27)
+
+### Features
+
+* **leaderboard:** monthly history, denormalized identity and direct profile-event projection ([40bd521](https://github.com/joutio/joutio-leaderboard/commit/40bd52162edc6d04d218485d8fd9f07add7c18de))
+
+## [2.0.0](https://github.com/joutio/joutio-leaderboard/compare/v1.6.7...v2.0.0) (2026-09-25)
+
+### ⚠ BREAKING CHANGES
+
+* **leaderboard:** the service no longer exposes its REST API (the BFF is the
+sole surface); search/query contracts use the SDK SearchRequest/SearchResponse
+DTOs and the social domain contract (2.0.0).
+
+### Features
+
+* **leaderboard:** headless service + SDK search contracts ([54db365](https://github.com/joutio/joutio-leaderboard/commit/54db365f49bfda00fd170224c8d9d21d9f70d7ce))
+
+## [1.6.7](https://github.com/joutio/joutio-leaderboard/compare/v1.6.6...v1.6.7) (2026-09-24)
+
+### Bug Fixes
+
+* **deps:** bump joutio-parent to 2.4.4 (typed PageResult over query transport) ([bf5a99d](https://github.com/joutio/joutio-leaderboard/commit/bf5a99d267e051c07b5d032696d13156a2dbbdbf))
+
+## [1.6.6](https://github.com/joutio/joutio-leaderboard/compare/v1.6.5...v1.6.6) (2026-09-24)
+
+### Bug Fixes
+
+* **deps:** bump joutio-parent to 2.4.3 (bus-only search criteria type info) ([89c19fd](https://github.com/joutio/joutio-leaderboard/commit/89c19fd32783ab99da00023aa6c9b800ec79ab7a))
+
+## [1.6.5](https://github.com/joutio/joutio-leaderboard/compare/v1.6.4...v1.6.5) (2026-09-24)
+
+### Bug Fixes
+
+* **deps:** bump joutio-parent to 2.4.2 (search criteria type info) ([57ba9ed](https://github.com/joutio/joutio-leaderboard/commit/57ba9edcbaa60e91eacd05009df82aeff7f70186))
+
+## [1.6.4](https://github.com/joutio/joutio-leaderboard/compare/v1.6.3...v1.6.4) (2026-09-22)
+
+### Bug Fixes
+
+* **joutio-leaderboard:** upgrade joutio-parent to 2.3.4 ([ea017ad](https://github.com/joutio/joutio-leaderboard/commit/ea017adac749974ca1bfa77b010c4b21898b6e98))
+
+## [1.6.3](https://github.com/joutio/joutio-leaderboard/compare/v1.6.2...v1.6.3) (2026-09-22)
+
+### Bug Fixes
+
+* **joutio-leaderboard:** upgrade joutio-parent to 2.3.3 ([5ec4aea](https://github.com/joutio/joutio-leaderboard/commit/5ec4aea0e34a71e98b3130a81571d5f49febbe0f))
+
+## [1.6.2](https://github.com/joutio/joutio-leaderboard/compare/v1.6.1...v1.6.2) (2026-09-22)
+
+### Bug Fixes
+
+* **joutio-leaderboard:** upgrade joutio-parent to 2.3.2 ([4d6bfb5](https://github.com/joutio/joutio-leaderboard/commit/4d6bfb549afbfd65a577a8972ecca62dc7935ba3))
+
+## [1.6.1](https://github.com/joutio/joutio-leaderboard/compare/v1.6.0...v1.6.1) (2026-09-22)
+
+### Bug Fixes
+
+* **leaderboard:** upgrade joutio-parent to 2.3.1 (registration address fix) ([43466a4](https://github.com/joutio/joutio-leaderboard/commit/43466a49894cbadf06cd091c7586afd8d1749672))
+
+## [1.6.0](https://github.com/joutio/joutio-leaderboard/compare/v1.5.1...v1.6.0) (2026-09-22)
+
+### Features
+
+* **leaderboard:** explicit Axon processing groups ([54a4277](https://github.com/joutio/joutio-leaderboard/commit/54a4277fdf853eef76d13ecb6ca341cd6e785541))
+
+## [1.5.1](https://github.com/joutio/joutio-leaderboard/compare/v1.5.0...v1.5.1) (2026-09-21)
+
+### Bug Fixes
+
+* **saga:** await RecordXpCommand so dispatch failures are retried (no XP loss) ([1b7aa0d](https://github.com/joutio/joutio-leaderboard/commit/1b7aa0df94010466dbbf60ed4446cc8b1b0ae575))
+
+## [1.5.0](https://github.com/joutio/joutio-leaderboard/compare/v1.4.5...v1.5.0) (2026-09-21)
+
+### Features
+
+* **leaderboard:** idempotent XP projection by (topic, user, game) ([5d03f28](https://github.com/joutio/joutio-leaderboard/commit/5d03f280f195f7c1a5a653731523f9f197c03d33))
+
+### Bug Fixes
+
+* **observability:** keep readable console logs in local ([56f5372](https://github.com/joutio/joutio-leaderboard/commit/56f537256dfb8125622c37ca1d8a41bbfcef6248))
+
+## [1.4.5](https://github.com/joutio/joutio-leaderboard/compare/v1.4.4...v1.4.5) (2026-09-20)
+
+### Bug Fixes
+
+* **deps:** bump joutio-sdk to 2.1.1 ([204d8f0](https://github.com/joutio/joutio-leaderboard/commit/204d8f00d8ccc5f385cd8dc8b43b8fcb50ecfd54))
+
+## [1.4.4](https://github.com/joutio/joutio-leaderboard/compare/v1.4.3...v1.4.4) (2026-09-20)
+
+### Bug Fixes
+
+* **config:** align prod service URLs with joutio-* names ([f266cc9](https://github.com/joutio/joutio-leaderboard/commit/f266cc955a4b73b4b3244c34fcca3f36ce5484d4))
+
+## [1.4.3](https://github.com/joutio/joutio-leaderboard/compare/v1.4.2...v1.4.3) (2026-09-20)
+
+### Bug Fixes
+
+* **deps:** bump joutio-sdk to 2.1.0 ([a83dbf7](https://github.com/joutio/joutio-leaderboard/commit/a83dbf723e748b29839a66f59a98a99ceaa96fd9))
+
+## [1.4.2](https://github.com/joutio/joutio-leaderboard/compare/v1.4.1...v1.4.2) (2026-09-20)
+
+### Bug Fixes
+
+* **observability:** remove WebSocket and business KPI metrics (consume joutio-sdk 1.4.3) ([348c569](https://github.com/joutio/joutio-leaderboard/commit/348c5697dbe7806dd88e04c32d2a966d4c485bc9))
+
+## [1.4.1](https://github.com/joutio/joutio-leaderboard/compare/v1.4.0...v1.4.1) (2026-09-20)
+
+### Bug Fixes
+
+* **observability:** consume joutio-sdk 1.4.2 (Axon activity metrics fix + Swagger server URL) ([4f48f7f](https://github.com/joutio/joutio-leaderboard/commit/4f48f7feaaab73725957eb354a44b3252d3a7103))
+
+## [1.4.0](https://github.com/joutio/joutio-leaderboard/compare/v1.3.0...v1.4.0) (2026-09-20)
+
+### Features
+
+* **observability:** consume joutio-sdk 1.4.0 (Axon activity metrics) ([df390cf](https://github.com/joutio/joutio-leaderboard/commit/df390cf3a4aab6e8f334fa77917cb3ec61d0089f))
+
+## [1.3.0](https://github.com/joutio/joutio-leaderboard/compare/v1.2.0...v1.3.0) (2026-09-20)
+
+### Features
+
+* **observability:** leaderboard KPIs (XP recorded) + consume joutio-sdk 1.3.0 ([361d466](https://github.com/joutio/joutio-leaderboard/commit/361d466fc4801889f5ba8ed8c7a2e262a6280521))
+
+## [1.2.0](https://github.com/joutio/joutio-leaderboard/compare/v1.1.0...v1.2.0) (2026-09-20)
+
+### Features
+
+* **observability:** consume joutio-sdk 1.2.0 (structured logs + tracing) ([8835658](https://github.com/joutio/joutio-leaderboard/commit/88356584ca32a99276cfb4db8ed47a6e674d9656))
+
+## [1.1.0](https://github.com/joutio/joutio-leaderboard/compare/v1.0.1...v1.1.0) (2026-09-20)
+
+### Features
+
+* **observability:** consume joutio-sdk 1.1.0 (Prometheus metrics) ([4180c81](https://github.com/joutio/joutio-leaderboard/commit/4180c81362039b143d92bd22c0ad0fd6516c7ce7))
+
+## [1.0.1](https://github.com/joutio/joutio-leaderboard/compare/v1.0.0...v1.0.1) (2026-09-19)
+
+### Bug Fixes
+
+* add missing application-prod.yml (datasource, kafka, jwt) ([11810f0](https://github.com/joutio/joutio-leaderboard/commit/11810f0faf1cea081addb28dec61fa59e3813054))
+
+## 1.0.0 (2026-09-19)
+
+### Features
+
+* **ci): add CI/release workflows; fix(maven:** pin inter-service domains to 0.0.1; align parent to joutio-parent 1.0.0 ([d311478](https://github.com/joutio/joutio-leaderboard/commit/d311478ed45aa987fa988c9f6e3581b2b56004dd))
+* first commit ([73ce04a](https://github.com/joutio/joutio-leaderboard/commit/73ce04a5e594c28c7ffb90771145ca3aef11fedb))

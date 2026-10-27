@@ -1,0 +1,107 @@
+package com.joutio.leaderboard.application.service;
+
+import com.joutio.microservice.core.infrastructure.axon.QueryResponseTypes;
+import com.joutio.leaderboard.domain.model.LeaderboardPage;
+import com.joutio.leaderboard.domain.model.LeaderboardRank;
+import com.joutio.leaderboard.domain.model.LeaderboardRules;
+import com.joutio.leaderboard.domain.model.LeaderboardScope;
+import com.joutio.leaderboard.domain.model.PlayerIdentity;
+import com.joutio.leaderboard.domain.model.TopicLeaderboardEntry;
+import com.joutio.leaderboard.domain.port.in.GetLeaderboardUseCase;
+import com.joutio.leaderboard.domain.port.out.LeaderboardFollowingPort;
+import com.joutio.leaderboard.domain.port.out.PlayerIdentityRepositoryPort;
+import com.joutio.leaderboard.domain.query.LeaderboardQuery;
+import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * Service applicatif — implémente {@link GetLeaderboardUseCase}.
+ *
+ * <p>Résout la portée (monde / amis / pays) ; l'identité et le niveau des entrées sont déjà
+ * dénormalisés dans le read model, et le pays du demandeur est lu dans le read model local
+ * ({@link PlayerIdentityRepositoryPort}) — aucune résolution de profil cross-service bloquante.</p>
+ */
+@Service
+public class LeaderboardQueryService implements GetLeaderboardUseCase {
+
+    private final QueryGateway queryGateway;
+    private final PlayerIdentityRepositoryPort playerIdentityRepositoryPort;
+    private final LeaderboardFollowingPort leaderboardFollowingPort;
+
+    public LeaderboardQueryService(QueryGateway queryGateway,
+                                   PlayerIdentityRepositoryPort playerIdentityRepositoryPort,
+                                   LeaderboardFollowingPort leaderboardFollowingPort) {
+        this.queryGateway = queryGateway;
+        this.playerIdentityRepositoryPort = playerIdentityRepositoryPort;
+        this.leaderboardFollowingPort = leaderboardFollowingPort;
+    }
+
+    @Override
+    public CompletableFuture<List<TopicLeaderboardEntry>> topByTopic(String topicId,
+                                                                     boolean monthly,
+                                                                     String month,
+                                                                     int limit,
+                                                                     LeaderboardScope scope,
+                                                                     String requesterId) {
+        ScopeFilter filter = resolveScope(scope, requesterId);
+
+        return queryGateway.query(
+                        new LeaderboardQuery.TopByTopicQuery(
+                                topicId, monthly, monthOrCurrent(monthly, month), 0, limit,
+                                filter.memberIds(), filter.country()),
+                        QueryResponseTypes.instanceOf(LeaderboardPage.class))
+                .thenApply(LeaderboardPage::entries);
+    }
+
+    @Override
+    public CompletableFuture<Optional<LeaderboardRank>> rankOf(String topicId,
+                                                               String userId,
+                                                               boolean monthly,
+                                                               String month,
+                                                               LeaderboardScope scope) {
+        ScopeFilter filter = resolveScope(scope, userId);
+
+        return queryGateway.query(
+                new LeaderboardQuery.GetTopicRankQuery(
+                        topicId, userId, monthly, monthOrCurrent(monthly, month),
+                        filter.memberIds(), filter.country()),
+                QueryResponseTypes.optionalInstanceOf(LeaderboardRank.class));
+    }
+
+    /** Un classement mensuel sans mois explicite porte sur le mois courant. */
+    private String monthOrCurrent(boolean monthly, String month) {
+        if (!monthly) {
+            return month;
+        }
+        return month == null || month.isBlank() ? LeaderboardRules.currentMonth() : month;
+    }
+
+    private ScopeFilter resolveScope(LeaderboardScope scope, String requesterId) {
+        if (scope == null || requesterId == null || scope == LeaderboardScope.WORLD) {
+            return new ScopeFilter(null, null);
+        }
+
+        if (scope == LeaderboardScope.FRIENDS) {
+            Set<String> memberIds = new LinkedHashSet<>(leaderboardFollowingPort.getFollowingIds(requesterId));
+            memberIds.add(requesterId);
+
+            return new ScopeFilter(new ArrayList<>(memberIds), null);
+        }
+
+        String country = playerIdentityRepositoryPort.findById(requesterId)
+                .map(PlayerIdentity::country)
+                .orElse(null);
+
+        return country == null ? new ScopeFilter(null, null) : new ScopeFilter(null, country);
+    }
+
+    private record ScopeFilter(List<String> memberIds, String country) {
+    }
+}

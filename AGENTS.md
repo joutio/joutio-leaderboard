@@ -1,0 +1,89 @@
+# AGENTS.md — joutio-leaderboard
+
+> Service de **classements par thème** : all-time (progression cumulée) et mensuel
+> (reset au 1er du mois). Architecture : Axon Framework (CQRS/EDA) + JPA (projection).
+> Pour les règles de patterns :
+> [`../../best-practices/.backend/folder-structure.md`](../../best-practices/.backend/folder-structure.md).
+
+---
+
+## 1. Rôle
+
+Classement d'un joueur **dans un thème** : chaque thème a son propre classement (être
+excellent en géographie ne fait pas monter au classement cinéma). L'XP d'un duel
+(`XpAwardedEvent` de `joutio-profile`) alimente l'entrée `(thème, joueur)`.
+
+Deux horizons :
+- **All-time** : XP cumulée dans le thème (détermine la position ; l'Elo reste la seule métrique joueur).
+- **Mensuel** : XP du mois (`YYYY-MM`), **historique conservé** — chaque mois a sa propre ligne,
+  consultable via le paramètre `month` de la surface BFF.
+
+Portées : **monde**, **abonnements** (`scope=following` / alias `friends`) et **pays** —
+abonnements via `joutio-social` (`UserFollowerQuery.GetFollowingIdsQuery`), pays via le profil.
+
+**Package** : `com.joutio.leaderboard` · **Port** : `8091` · **DB** : `joutio_leaderboard`
+
+---
+
+## 2. Surface (headless)
+
+Service **headless** : aucun contrôleur REST ni WebSocket. La surface applicative unique est le
+**`joutio-bff`** (`/api/**` + `/ws`) ; il interroge ce service via le **query bus** Axon et consomme
+ses événements. Les handlers de requête/commande, sagas et projections restent la seule surface
+exposée par le service.
+## 3. Use cases (ports entrants — `domain/port/in/`)
+
+- `GetLeaderboardUseCase` — top d'un thème (all-time/mensuel) + rang d'un joueur.
+
+**Queries** (`LeaderboardQuery.java`) : `TopByTopicQuery`, `GetTopicRankQuery`.
+**Ports sortants locaux** : `LeaderboardRepositoryPort` (projection).
+
+---
+
+## 4. Dépendances inter-services
+
+| Consommateur                  | Service source    | Event Axon consommé                 |
+|-------------------------------|-------------------|-------------------------------------|
+| `PlayerIdentityProjection`    | `joutio-profile`  | `ProfileEvent.ProfileCreatedEvent`  |
+| `PlayerIdentityProjection`    | `joutio-profile`  | `ProfileEvent.ProfilePseudonymUpdatedEvent` |
+| `PlayerIdentityProjection`    | `joutio-profile`  | `ProfileEvent.ProfileCountryUpdatedEvent`   |
+| `PlayerIdentityProjection`    | `joutio-profile`  | `ProfileEvent.ProfileAvatarUpdatedEvent`    |
+| `TopicLeaderboardProjection`  | `joutio-profile`  | `ProgressionEvent.XpAwardedEvent`   |
+
+Dépendance Maven `joutio-profile-domain` (artifact). **Plus de saga ni d'agrégat relais** : les
+projections consomment directement les événements profile (pattern `ActivityProjection`), écrivent
+l'entrée all-time + l'entrée mensuelle, et l'idempotence par `(topicId, userId, gameId)` est portée
+par le journal `topic_leaderboard_awarded_game`. Aucun événement local n'est produit : l'event
+store du service ne croît plus avec les duels (lot C3, rétention résolue par suppression de
+l'écriture inutile). **Aucune query cross-service dans une projection** : l'identité publique est
+matérialisée localement (voir ci-dessous), plus de `LeaderboardProfilePort` / `.join()` sur le
+thread du processor (`best-practices/.backend/anti-patterns.md` § 3).
+
+**Les duels contre bot (`XpAwardedEvent.botGame`) sont ignorés** : ils ne comptent **ni** pour l'XP
+du joueur (0 XP en entraînement), **ni** pour les badges ou les titres (acquisition réservée aux
+**parties contre des humains**, cf. `joutio-profile`), **ni** pour le classement.
+
+### Modèle de lecture (lot C3)
+
+- **Historique mensuel** : table `topic_leaderboard_monthly_entry` par `(thème, joueur, mois)` —
+  chaque mois a sa ligne, jamais écrasée. `TopByTopicQuery`/`GetTopicRankQuery` prennent un
+  `month` (`YYYY-MM`), `null` = mois courant. Backfill du mois courant à la migration V2.
+- **Identité dénormalisée** : `pseudonym`, `avatar_options`, `country` sont
+  stockés sur les entrées (all-time et mensuelles) — plus aucune résolution de profil par page
+  côté BFF. **Read model local `player_identity_entry` (migration V3)** alimenté par
+  `PlayerIdentityProjection` (`ProfileCreatedEvent` + événements de champ) : les projections et la
+  portée pays lisent l'identité en local, sans query cross-service bloquante. Les `refreshXxx` sur
+  les entrées restent (les autres entrées du joueur sont mises à jour), le pays ne fige donc
+  jamais ; seul le total d'XP du thème est recalculé à chaque attribution.
+
+### Enrichissements front
+
+- **Portées** `scope=world|following|country` (alias historique `friends`) : abonnements via
+  `LeaderboardFollowingPort` (`joutio-social-domain`, query dédiée `GetUserFollowsQuery`), pays
+  filtré sur le `country` dénormalisé ; la portée pays résout le pays du demandeur dans le read
+  model local `PlayerIdentityRepositoryPort` (éventuellement cohérent — repli : pas de filtre).
+- **Pagination et rang sans scan borné** : `TopByTopicQuery(topicId, monthly, month, page, size,
+  memberIds, country)` → `LeaderboardPage` (Specification dynamique) ; `GetTopicRankQuery` renvoie
+  le rang **au-delà du top 100** via un `COUNT` des entrées classées avant le joueur
+  (XP supérieure, départage `userId` identique à l'ordre de la page).
+- `SearchRoomQuery`/recherches restent pour les futures surfaces d'administration.

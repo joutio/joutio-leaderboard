@@ -1,0 +1,23 @@
+spring:
+  config:
+    import: optional:classpath:joutio-defaults.yml
+  application:
+    name: joutio-leaderboard
+  profiles:
+    default: local
+
+  flyway:
+    locations: classpath:db/migration/leaderboard
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+microservice:
+  swagger:
+    description: Joutio Leaderboard Module - global and monthly rankings
+  websocket:
+    enabled: false
+
+

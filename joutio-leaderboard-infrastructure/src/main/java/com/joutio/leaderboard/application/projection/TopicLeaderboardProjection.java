@@ -7,6 +7,7 @@ import com.joutio.leaderboard.domain.port.out.LeaderboardAwardedGameRepositoryPo
 import com.joutio.leaderboard.domain.port.out.LeaderboardRepositoryPort;
 import com.joutio.leaderboard.domain.port.out.PlayerIdentityRepositoryPort;
 import com.joutio.profile.domain.event.ProfileEvent;
+import com.joutio.profile.domain.model.CountryCodes;
 import com.joutio.profile.domain.event.ProgressionEvent;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
@@ -103,7 +104,7 @@ public class TopicLeaderboardProjection {
     @EventHandler
     @Transactional
     public void on(ProfileEvent.ProfileCountryUpdatedEvent event) {
-        leaderboardRepositoryPort.refreshCountry(event.userId(), event.country());
+        leaderboardRepositoryPort.refreshCountry(event.userId(), CountryCodes.normalize(event.country()));
 
         logger.debug("Pays de classement rafraîchi: userId={}", event.userId());
     }

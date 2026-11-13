@@ -3,6 +3,7 @@ package com.joutio.leaderboard.application.projection;
 import com.joutio.leaderboard.domain.model.PlayerIdentity;
 import com.joutio.leaderboard.domain.port.out.PlayerIdentityRepositoryPort;
 import com.joutio.profile.domain.event.ProfileEvent;
+import com.joutio.profile.domain.model.CountryCodes;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class PlayerIdentityProjection {
     @Transactional
     public void on(ProfileEvent.ProfileCountryUpdatedEvent event) {
         upsert(event.userId(), event.updatedAt(), identity -> new PlayerIdentity(
-                identity.userId(), identity.pseudonym(), event.country(), identity.avatarOptions()));
+                identity.userId(), identity.pseudonym(), CountryCodes.normalize(event.country()), identity.avatarOptions()));
     }
 
     @EventHandler

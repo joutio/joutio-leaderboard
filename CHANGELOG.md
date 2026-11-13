@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/joutio/joutio-leaderboard/compare/v1.0.0...v1.1.0) (2026-11-13)
+
+### Features
+
+* **leaderboard:** country as ISO 3166-1 alpha-2 ([9682b14](https://github.com/joutio/joutio-leaderboard/commit/9682b14284c7e8c2586d8fe1d9f64c173d285310))
+
 ## 1.0.0 (2026-10-27)
 
 ### Features

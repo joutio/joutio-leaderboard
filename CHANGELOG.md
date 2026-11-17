@@ -1,3 +1,9 @@
+## [1.1.3](https://github.com/joutio/joutio-leaderboard/compare/v1.1.2...v1.1.3) (2026-11-17)
+
+### Bug Fixes
+
+* **deps:** pin joutio-profile-domain 4.0.4, 1.4.0 is no longer published ([a48ddf0](https://github.com/joutio/joutio-leaderboard/commit/a48ddf03f46e4d8d1ec07446773cafeb325da115))
+
 ## [1.1.2](https://github.com/joutio/joutio-leaderboard/compare/v1.1.1...v1.1.2) (2026-11-17)
 
 ### Bug Fixes

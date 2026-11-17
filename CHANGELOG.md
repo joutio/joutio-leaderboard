@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/joutio/joutio-leaderboard/compare/v1.1.0...v1.1.1) (2026-11-17)
+
+### Bug Fixes
+
+* **deps:** joutio-parent 1.1.0, unknown enum constants tolerated on the Axon transport ([0884a8a](https://github.com/joutio/joutio-leaderboard/commit/0884a8a3c1339b81f16263ad830a34f6942ab3ce))
+
 ## [1.1.0](https://github.com/joutio/joutio-leaderboard/compare/v1.0.0...v1.1.0) (2026-11-13)
 
 ### Features

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 /**
  * Test du read model local d'identité : alimenté par les événements profil, sans aucune query
  * cross-service bloquante (l'ancien {@code findIdentities(...).join()} est interdit — voir
- * {@code best-practices/.backend/anti-patterns.md}).
+ * {@code docs/backend/anti-patterns.md}).
  */
 class PlayerIdentityProjectionTest {
 

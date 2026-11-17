@@ -1,19 +1,19 @@
--- Joutio leaderboard — baseline schema (squashed)
--- Generated from a fresh PostgreSQL 16 database after applying the legacy migrations.
+-- Joutio leaderboard — schéma complet (pg_dump, PostgreSQL 16).
+-- V1 unique avant l'ouverture publique : toute évolution modifie ce fichier et impose une remise à zéro
+-- de la base (docs/backend/conventions.md, section Base de données).
 
 --
 -- PostgreSQL database dump
 --
 
 
--- Dumped from database version 16.13
--- Dumped by pg_dump version 16.13
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;

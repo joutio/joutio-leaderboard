@@ -17,7 +17,7 @@ import java.util.function.UnaryOperator;
 /**
  * Read model local d'identité publique : le classement dénormalise pseudonyme, pays et avatar
  * depuis les événements du profil, sans jamais interroger {@code joutio-profile} en bloquant
- * (voir {@code best-practices/.backend/anti-patterns.md}). La fusion champ par champ préserve les
+ * (voir {@code docs/backend/anti-patterns.md}). La fusion champ par champ préserve les
  * valeurs déjà matérialisées lors d'un rejeu.
  */
 @Component

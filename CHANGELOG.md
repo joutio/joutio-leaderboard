@@ -1,3 +1,9 @@
+## [1.1.7](https://github.com/joutio/joutio-leaderboard/compare/v1.1.6...v1.1.7) (2026-11-20)
+
+### Bug Fixes
+
+* **deps:** joutio-parent 2.2.1, distinct Kafka consumer metrics ([3e5e041](https://github.com/joutio/joutio-leaderboard/commit/3e5e041b4fd2cba97a487e981d4c0b4a2f2427fb))
+
 ## [1.1.6](https://github.com/joutio/joutio-leaderboard/compare/v1.1.5...v1.1.6) (2026-11-20)
 
 ### Bug Fixes

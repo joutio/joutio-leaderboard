@@ -1,3 +1,9 @@
+## [1.1.10](https://github.com/joutio/joutio-leaderboard/compare/v1.1.9...v1.1.10) (2026-11-20)
+
+### Bug Fixes
+
+* **docker:** rebuild on patched base images ([87fe7a5](https://github.com/joutio/joutio-leaderboard/commit/87fe7a58a86acd51f58f85910ddb29b8d71dca08))
+
 ## [1.1.9](https://github.com/joutio/joutio-leaderboard/compare/v1.1.8...v1.1.9) (2026-11-20)
 
 ### Bug Fixes

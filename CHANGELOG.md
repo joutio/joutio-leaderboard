@@ -1,3 +1,9 @@
+## [1.1.11](https://github.com/joutio/joutio-leaderboard/compare/v1.1.10...v1.1.11) (2026-11-20)
+
+### Performance Improvements
+
+* **docker:** JDK 25 AOT cache at startup ([5db8c95](https://github.com/joutio/joutio-leaderboard/commit/5db8c950f7edc13a2dda0002b8eb9bf4082af24c))
+
 ## [1.1.10](https://github.com/joutio/joutio-leaderboard/compare/v1.1.9...v1.1.10) (2026-11-20)
 
 ### Bug Fixes

@@ -1,3 +1,9 @@
+## [1.1.12](https://github.com/joutio/joutio-leaderboard/compare/v1.1.11...v1.1.12) (2026-11-20)
+
+### Bug Fixes
+
+* **deps:** joutio-parent 2.4.1 with patched dependencies ([8d2595d](https://github.com/joutio/joutio-leaderboard/commit/8d2595d9a94c7f5831bd8c1b6d7bbee6ea740a09))
+
 ## [1.1.11](https://github.com/joutio/joutio-leaderboard/compare/v1.1.10...v1.1.11) (2026-11-20)
 
 ### Performance Improvements

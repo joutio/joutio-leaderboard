@@ -1,3 +1,9 @@
+## [1.1.15](https://github.com/joutio/joutio-leaderboard/compare/v1.1.14...v1.1.15) (2026-11-25)
+
+### Bug Fixes
+
+* **deps:** joutio-parent 3.2.0 with the gRPC query bus ([e052194](https://github.com/joutio/joutio-leaderboard/commit/e0521942370b582cd0cebf92f384b46540332b1e))
+
 ## [1.1.14](https://github.com/joutio/joutio-leaderboard/compare/v1.1.13...v1.1.14) (2026-11-25)
 
 ### Bug Fixes
